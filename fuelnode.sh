@@ -1,9 +1,9 @@
 
-read -p "Please enter the INFURA or ALCHEMY URL : " URL && export URL=$ETHEREUM_RPC_ENDPOINT
+read -p "Please enter the INFURA or ALCHEMY URL :" URL && export URL=$ETHEREUM_RPC_ENDPOINT
 
 
-# sudo apt install jq
-sudo apt-get install expect
+# sudo apt install jq   | sh -s -- -y
+sudo apt-get install expect   | sh -s -- -y
 
 #curl -sSL https://install.fuel.network | sh -s -- -y
 curl -fsSL https://install.fuel.network | sh -s -- --no-modify-path --yes
