@@ -1,14 +1,7 @@
-
-read -p "Please enter the INFURA or ALCHEMY URL :"URL && export URL=$ETHEREUM_RPC_ENDPOINT
-
-
-# sudo apt install jq   | sh -s -- -y
-sudo apt-get install expect   | sh -s -- -y
-
-#curl -sSL https://install.fuel.network | sh -s -- -y
 curl -fsSL https://install.fuel.network | sh -s -- --no-modify-path --yes
 git clone  https://github.com/FuelLabs/chain-configuration.git
 
+read -p "Please enter the INFURA or ALCHEMY URL: " ETHEREUM_RPC_ENDPOINT && export URL=$ETHEREUM_RPC_ENDPOINT
 export SNAPSHOT_PATH=$PWD/chain-configuration/ignition
 export PATH="${HOME}/.fuelup/bin:${PATH}"
 export P2P_PRIVATE_KEY=$(cd  $HOME/.fuelup && fuel-core-keygen new --key-type peering | jq -r '.secret')
