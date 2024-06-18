@@ -1,17 +1,15 @@
-cd /home
-
 curl -fsSL https://install.fuel.network | sh -s -- --no-modify-path --yes
 git clone  https://github.com/FuelLabs/chain-configuration.git
 apt install jq  -y
 
 export SNAPSHOT_PATH=$PWD/chain-configuration/ignition
 export PATH="${HOME}/.fuelup/bin:${PATH}"
-export ETHEREUM_RPC_ENDPOINT=$(cat  $PWD/apiurl.txt)
+export ETHEREUM_RPC_ENDPOINT=$(cat  /home/apiurl.txt)
 
 if [ -f "$PWD/key.json" ]; then 
-    export P2P_PRIVATE_KEY=$(cat "$PWD/key.json" | jq -r '.secret')
+    export P2P_PRIVATE_KEY=$(cat /home/key.json | jq -r '.secret')
 else 
-    export P2P_PRIVATE_KEY=$($HOME/.fuelup/bin/fuel-core-keygen new --key-type peering > "$PWD/key.json" && cat "$PWD/key.json" | jq -r '.secret')
+    export P2P_PRIVATE_KEY=$($HOME/.fuelup/bin/fuel-core-keygen new --key-type peering > /home/key.json && cat /home/key.json | jq -r '.secret')
 fi
 
 
