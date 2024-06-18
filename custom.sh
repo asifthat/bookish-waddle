@@ -1,5 +1,7 @@
 cd /home
 
+apt install jq  -y
+
 export SNAPSHOT_PATH=$PWD/chain-configuration/ignition
 
 export PATH="${HOME}/.fuelup/bin:${PATH}"
