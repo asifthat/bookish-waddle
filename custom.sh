@@ -31,7 +31,3 @@ fuel-core run \
 --relayer-da-deploy-height=5827607 \
 --relayer-log-page-size=500 \
 --sync-block-stream-buffer-size 30
-
-curl -X POST http://0.0.0.0:4000/v1/graphql \
-  -H "Content-Type: application/json" \
-  -d '{"query": "{ nodeInfo{nodeVersion}}"}' > queryresult.txt
