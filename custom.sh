@@ -1,11 +1,11 @@
 cd /home
 
+curl -fsSL https://install.fuel.network | sh -s -- --no-modify-path --yes
+git clone  https://github.com/FuelLabs/chain-configuration.git
 apt install jq  -y
 
 export SNAPSHOT_PATH=$PWD/chain-configuration/ignition
-
 export PATH="${HOME}/.fuelup/bin:${PATH}"
-
 export ETHEREUM_RPC_ENDPOINT=$(cat  $PWD/apiurl.txt)
 
 if [ -f "$PWD/key.json" ]; then 
