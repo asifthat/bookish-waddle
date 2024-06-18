@@ -14,7 +14,9 @@ else
     export P2P_PRIVATE_KEY=$($HOME/.fuelup/bin/fuel-core-keygen new --key-type peering > "$PWD/key.json" && cat "$PWD/key.json" | jq -r '.secret')
 fi
 
-${HOME}/.fuelup/bin/fuel-core run \
+
+cd  $HOME/.fuelup
+fuel-core run \
 --service-name=fuel-sepolia-testnet-node \
 --keypair $P2P_PRIVATE_KEY \
 --relayer $ETHEREUM_RPC_ENDPOINT \
