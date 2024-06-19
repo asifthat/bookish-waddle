@@ -17,13 +17,27 @@ fi
 export ETHEREUM_RPC_ENDPOINT=$(cat "$HOME/apiurl.txt")
 
 
-# Check if key.json exists to set P2P_PRIVATE_KEY
-if [ -f "$PWD/key.json" ]; then
-    export P2P_PRIVATE_KEY=$(cat "$HOME/key.json" | jq -r '.secret')
+# Check if fuelp2pkey.json exists
+if [ ! -f "$HOME/fuelp2pkey.json" ]; then
+    # Prompt the user to enter Y or N
+    read -p "Do you have an existing P2P private key? Type 'Y' for yes, 'N' for no: " choice
+
+    if [ "$choice" = "Y" ] || [ "$choice" = "y" ]; then
+        # User has an existing key, prompt for input
+        read -p "Please enter the P2P private key (without '0x'): " key_input
+        export P2P_PRIVATE_KEY="$key_input"
+    elif [ "$choice" = "N" ] || [ "$choice" = "n" ]; then
+        # Generate new P2P_PRIVATE_KEY and save it to fuelp2pkey.json
+        export P2P_PRIVATE_KEY=$("$HOME/.fuelup/bin/fuel-core-keygen" new --key-type peering > "$HOME/fuelp2pkey.json" && cat "$HOME/fuelp2pkey.json" | jq -r '.secret')
+    else
+        echo "Invalid choice. Please type 'Y' or 'N'."
+        exit 1
+    fi
 else
-    # Generate new P2P_PRIVATE_KEY and save it to key.json
-    export P2P_PRIVATE_KEY=$("$HOME/.fuelup/bin/fuel-core-keygen" new --key-type peering > "$HOME/key.json" && cat "$HOME/key.json" | jq -r '.secret')
+    # fuelp2pkey.json exists, load the key from the file
+    export P2P_PRIVATE_KEY=$(cat "$HOME/fuelp2pkey.json" | jq -r '.secret')
 fi
+
 
 # Write systemd service configuration
 sudo tee /etc/systemd/system/fuelnode.service > /dev/null << EOF
